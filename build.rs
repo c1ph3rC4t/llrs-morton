@@ -7,14 +7,13 @@
 //! Compile morton.ll
 
 #![allow(clippy::unwrap_used)]
-use std::{env, fs, path::PathBuf};
 
 fn main() {
     println!("cargo:rerun-if-changed=src/llvm_ir/morton.ll");
-    let target = env::var("TARGET").unwrap();
-    let src = fs::read_to_string("src/llvm_ir/morton.ll").unwrap();
-    let out = PathBuf::from(env::var("OUT_DIR").unwrap()).join("morton.ll");
-    fs::write(&out, format!("target triple = \"{target}\"\n{src}")).unwrap();
+    let target = std::env::var("TARGET").unwrap();
+    let src = std::fs::read_to_string("src/llvm_ir/morton.ll").unwrap();
+    let out = std::path::PathBuf::from(std::env::var("OUT_DIR").unwrap()).join("morton.ll");
+    std::fs::write(&out, format!("target triple = \"{target}\"\n{src}")).unwrap();
 
     cc::Build::new()
         .compiler("clang")
